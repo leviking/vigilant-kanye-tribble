@@ -48,7 +48,16 @@ const getBest = (req, res) => {
         res.send(`<h1>${results[0].quote}</h1>`)
     })
 }
-
+const createUser = (req, res) => {
+    (req.body.password !== req.body.confirm) ? res.send('Passwords must match!'): null;
+    con.query(`INSERT INTO user (profile_name, password, email, created_at) VALUES ("${req.body.username}", "${req.body.password}", "${req.body.email}", now())`, function(error, results, fields) {
+        if (error) {
+            res.status(400).send(`${JSON.stringify(error)}.`)
+            return;
+        }
+        (results) ? res.send('/'): null;
+    })
+}
 app.get('/', kanyeFetcher)
 
 app.get('/add', (req, res) => {
@@ -63,5 +72,5 @@ app.get('/login', (req, res) => {
 app.get('/best', getBest)
 
 app.get('/sign-up', (req, res) => { res.sendFile(__dirname + '/views/sign-up.html') })
-
+app.post('/sign-up', createUser)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
