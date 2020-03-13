@@ -14,9 +14,8 @@ const con = mysql.createConnection({
 })
 con.connect(err => console.log(err))
 
-
 const getKanyeWrapper = (wisdom) => `
-<h1>${wisdom}</h1>
+<h2>${wisdom}</h2>
 <button onClick="addWisdom()">
   Add
 </button>
